@@ -7,7 +7,7 @@ package lons;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class ConcreteBinarySolution implements BinarySolution
+public class ConcreteBinarySolution extends BinarySolution
 {
     private boolean[] design;
     private int index = -1;

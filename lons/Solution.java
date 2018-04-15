@@ -7,11 +7,18 @@ package lons;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public interface Solution
+public abstract class Solution
 {
-    int getIndex();
-    int getNumberOfElements();
-    default public int hashcode() {
+    public abstract int getIndex();
+    public abstract int getNumberOfElements();
+    public int hashCode() {
         return getIndex();
+    }
+    public boolean equals(Object obj) {
+        if (obj instanceof Solution) 
+            if (((Solution) obj).getIndex()==this.getIndex())
+                return true;
+        
+        return false;
     }
 }

@@ -2,6 +2,7 @@ package lons;
 
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.ArrayList;
 
 /**
@@ -14,9 +15,6 @@ public class LONGenerator
 {
     static int greedyHillclimbCalls;
     
-    private static void clean() {
-        greedyHillclimbCalls=0;
-    }
     
     public static <K extends Solution> void naiveExhaustiveLON(Problem<K> problem, Neighbourhood<K> neighbourhood, HashMap<K,Weight> optimaBasins,HashMap<K,HashMap<K,Weight>> mapOfAdjacencyListAndWeight) {
         exhaustiveLON(problem,neighbourhood,optimaBasins,mapOfAdjacencyListAndWeight,false);
@@ -26,7 +24,57 @@ public class LONGenerator
         exhaustiveLON(problem,neighbourhood,optimaBasins,mapOfAdjacencyListAndWeight,true);
     }
     
-    /**
+    public static <K extends Solution> void naiveSampledLON(Problem<K> problem, Neighbourhood<K> neighbourhood, HashMap<K,Weight> optimaBasins,HashMap<K,HashMap<K,Weight>> mapOfAdjacencyListAndWeight, int numberOfSamples) {
+        System.out.print("\n cleaning...");
+        clean();
+        ArrayList<K> optima = new ArrayList<>(); // list of optima
+        for (int i=0; i<numberOfSamples; i++) {
+            K randomDesign = problem.getRandomSolution();
+            ArrayList<K> visitedOnPath = new ArrayList<>();
+            K optimum = greedyHillclimb(randomDesign,problem, neighbourhood);
+            if (optimaBasins.containsKey(optimum)) {
+                optimaBasins.get(optimum).increment();
+            } else {
+                optimaBasins.put(optimum,new Weight(1));
+            }
+        }
+    }
+        
+    
+    public static <K extends Solution> void sampledLON(Problem<K> problem, Neighbourhood<K> neighbourhood, HashMap<K,Weight> optimaBasins,HashMap<K,HashMap<K,Weight>> mapOfAdjacencyListAndWeight, int numberOfSamples) {
+        System.out.print("\n cleaning...");
+        clean();
+        HashSet<K> optima = new HashSet<>(); // list of optima
+        HashMap<K,K> mapFromSolutionToOptima = new HashMap<>(numberOfSamples); // map from each solution queried on a path to its optima
+        HashMap<K,Double> fitnesses  = new HashMap<>(numberOfSamples); // map from queries designs to their fitness 
+        for (int i=0; i<numberOfSamples; i++) {
+            K randomDesign = problem.getRandomSolution();
+            //System.out.print(randomDesign.hashcode()+" ");
+            ArrayList<K> visitedOnPath = new ArrayList<>();
+            K optimum = greedyHillclimb(randomDesign,problem, neighbourhood, fitnesses, mapFromSolutionToOptima, visitedOnPath);
+            optima.add(optimum);
+            for (K design : visitedOnPath) 
+                if (!mapFromSolutionToOptima.containsKey(design))
+                    mapFromSolutionToOptima.put(design,optimum);
+            
+            if (optimaBasins.containsKey(optimum)) {
+                optimaBasins.get(optimum).increment();
+            } else {
+                optimaBasins.put(optimum,new Weight(1));
+            }
+        }
+        System.out.println(optima.size());
+        System.out.println(fitnesses.size());
+        System.out.println(mapFromSolutionToOptima.size());
+    }
+    //helper methods
+    
+    
+    private static void clean() {
+        greedyHillclimbCalls=0;
+    }
+    
+    /*
      * Fills optimaBasins hashmap with the optima solutions and the corresponding basin sizes, and 
      * mapOfAdjacencyList with the corresponding list of linked (outward) optima and weights (in the 
      * Edge instances). 
@@ -45,6 +93,54 @@ public class LONGenerator
         fillBasins(designs,optima,optimaBasins,mapFromSolutionToOptima,solutionFitness,neighbourhoodIndices,efficient);
         System.out.print("setting edges...");
         setEdges(neighbourhood,designs,optima,mapOfAdjacencyListAndWeight,mapFromSolutionToOptima);
+    }
+    
+    
+    private static <K extends Solution> K greedyHillclimb(K designToSearchFrom, Problem<K> problem, Neighbourhood<K> neighbourhood) {
+        greedyHillclimbCalls++;
+        K nextOnPath = designToSearchFrom;
+        double currentFitness = problem.getQuality(designToSearchFrom);
+        K[] neighbours = neighbourhood.neighbouringSolutions(designToSearchFrom);
+        for (K neighbour : neighbours) {
+            double fitness = problem.getQuality(neighbour);
+            if (fitness > currentFitness) {
+                currentFitness = fitness;
+                nextOnPath = neighbour;
+            }
+        }
+        if (nextOnPath==designToSearchFrom)
+            return designToSearchFrom;
+        return greedyHillclimb(nextOnPath, problem, neighbourhood);    
+    }
+    
+    private static <K extends Solution> K greedyHillclimb(K designToSearchFrom, Problem<K> problem, Neighbourhood<K> neighbourhood, HashMap<K,Double> fitnesses, HashMap<K,K> mapFromSolutionToOptima, ArrayList<K> visitedOnPath) {
+        if (mapFromSolutionToOptima.containsKey(designToSearchFrom)){
+            return mapFromSolutionToOptima.get(designToSearchFrom);
+        } else {
+            greedyHillclimbCalls++;
+            visitedOnPath.add(designToSearchFrom);
+            K nextOnPath = designToSearchFrom;
+            Double currentFitness = fitnesses.get(designToSearchFrom);
+            if (currentFitness==null) {
+                currentFitness = problem.getQuality(designToSearchFrom);
+                fitnesses.put(designToSearchFrom,currentFitness);
+            }
+            K[] neighbours = neighbourhood.neighbouringSolutions(designToSearchFrom);
+            for (K neighbour : neighbours) {
+                Double fitness = fitnesses.get(neighbour);
+                if (fitness==null) {
+                    fitness = problem.getQuality(neighbour);
+                    fitnesses.put(neighbour,fitness);
+                } 
+                if (fitness.doubleValue() > currentFitness.doubleValue()) {
+                    currentFitness = fitness;
+                    nextOnPath = neighbour;
+                }
+            }
+            if (nextOnPath==designToSearchFrom)
+                return designToSearchFrom;
+            return greedyHillclimb(nextOnPath, problem, neighbourhood, fitnesses, mapFromSolutionToOptima,visitedOnPath);    
+        }
     }
     
     private static <K extends Solution> void setEdges(Neighbourhood<K> neighbourhood, K[] designs, ArrayList<K> optima, HashMap<K,HashMap<K,Weight>> mapOfAdjacencyListAndWeight, HashMap<K,K> mapFromSolutionToOptima) {
@@ -149,10 +245,6 @@ public class LONGenerator
         for (int i=0; i< designs.length; i++) 
             solutionFitnesses[i] = problem.getQuality(designs[i]);
         return solutionFitnesses;    
-    }
-    
-    public static <K extends Solution> void estimatedLON(HashMap<K,Weight> optimaBasins,HashMap<K,HashMap<K,Weight>> mapOfAdjacencyList, int numberOfRandomDraws) {
-        
     }
     
 }

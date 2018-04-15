@@ -7,8 +7,8 @@ package lons;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public interface BinarySolution extends Solution
+public abstract class BinarySolution extends Solution
 {
-    boolean[] getDesignVector();
-    boolean getDesignVariable(int index);
+    public abstract boolean[] getDesignVector();
+    public abstract boolean getDesignVariable(int index);
 }
