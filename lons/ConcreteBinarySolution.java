@@ -11,8 +11,14 @@ public class ConcreteBinarySolution implements BinarySolution
 {
     private boolean[] design;
     private int index = -1;
+    Neighbourhood<BinarySolution> neighbourhood;
     private ConcreteBinarySolution(boolean[] design) {
         this.design = design;
+    }
+    
+    @Override
+    public int getNumberOfElements(){
+        return design.length;
     }
     
     @Override
@@ -31,38 +37,6 @@ public class ConcreteBinarySolution implements BinarySolution
             index = BinaryProblem.getIndexOfBitString(design);
         }   
         return index;
-    }
-    
-    @Override
-    public BinarySolution[] getNeighbours() {
-        BinarySolution[] neighbours = new BinarySolution[design.length];
-        boolean[][] bitStringNeighbours = getBitStringNeighbours();
-        for (int i=0; i<neighbours.length; i++) {
-            neighbours[i] = new ConcreteBinarySolution(bitStringNeighbours[i]);
-        }
-        return neighbours;
-    }
-    
-    @Override
-    public int[] getNeighbourIndices() {
-        int[] indices = new int[design.length];
-        boolean[][] bitStringNeighbours = getBitStringNeighbours();
-        for (int i=0; i<indices.length; i++) {
-            indices[i] = BinaryProblem.getIndexOfBitString(bitStringNeighbours[i]);
-        }
-        return indices;
-    }
-    
-    private boolean[][] getBitStringNeighbours() {
-        boolean[][] neighbours = new boolean[design.length][design.length];
-        for (int i=0; i<design.length; i++) {
-            for (int j=0; j<design.length; j++) {
-                neighbours[i][j] = design[j];
-                if (i==j)
-                    neighbours[i][j] = !neighbours[i][j];
-            }
-        }
-        return neighbours; 
     }
     
     public static BinarySolution constructBinarySolution(boolean[] design) {

@@ -4,16 +4,12 @@ package lons;
 /**
  * Write a description of interface Problem here.
  * 
- * @author (your name) 
+ * @author Jonathan Fieldsend
  * @version (a version number or a date)
  */
-public interface BinaryProblem
+public interface BinaryProblem extends Problem<BinarySolution>
 {
     static final int[] bitPowers = BinaryProblem.getBitPowers(31);
-    double getQuality(BinarySolution s);
-    BinarySolution[] getExhaustiveSetOfSolutions();
-    BinarySolution getRandomSolution();
-    
     static int getIndexOfBitString(boolean[] x) {
         int index = 0;
         for (int i=0; i<x.length; i++) 

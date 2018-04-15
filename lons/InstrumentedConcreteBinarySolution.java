@@ -16,6 +16,11 @@ public class InstrumentedConcreteBinarySolution implements BinarySolution
     }
     
     @Override
+    public int getNumberOfElements() {
+        return wrappedInstance.getNumberOfElements();
+    }
+    
+    @Override
     public boolean[] getDesignVector() {
         return wrappedInstance.getDesignVector();
     }
@@ -28,15 +33,5 @@ public class InstrumentedConcreteBinarySolution implements BinarySolution
     @Override
     public int getIndex() {
         return wrappedInstance.getIndex();
-    }
-    
-    @Override
-    public BinarySolution[] getNeighbours() {
-        return wrappedInstance.getNeighbours();
-    }
-    
-    @Override
-    public int[] getNeighbourIndices() {
-        return wrappedInstance.getNeighbourIndices();
     }
 }

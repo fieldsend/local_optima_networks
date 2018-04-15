@@ -7,8 +7,11 @@ package lons;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public interface BinarySolution extends Solution
+public interface Solution
 {
-    boolean[] getDesignVector();
-    boolean getDesignVariable(int index);
+    int getIndex();
+    int getNumberOfElements();
+    default public int hashcode() {
+        return getIndex();
+    }
 }
