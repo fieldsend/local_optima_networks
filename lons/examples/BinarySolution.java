@@ -1,6 +1,6 @@
-package lons;
+package lons.examples;
 
-
+import lons.Solution;
 /**
  * Write a description of interface Solution here.
  * 

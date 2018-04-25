@@ -1,6 +1,6 @@
-package lons;
+package lons.examples;
 
-
+import lons.Problem;
 /**
  * Write a description of interface Problem here.
  * 
@@ -16,7 +16,9 @@ public interface BinaryProblem extends Problem<BinarySolution>
             index += x[i] ? BinaryProblem.bitPowers[i] : 0;
         return index;  
     }
-    
+    /*
+     * CHANGE TO MAKE SOLUTIONS WITH HASHCLASH
+     */
     static boolean[] getBitStringCorrespondingToIndex(int index, int bitStringLength) {
         boolean[] bitString = new boolean[bitStringLength];
         for (int i=bitStringLength-1; i>=0; i--) {

@@ -14,6 +14,7 @@ public abstract class Solution
     public int hashCode() {
         return getIndex();
     }
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof Solution) 
             if (((Solution) obj).getIndex()==this.getIndex())

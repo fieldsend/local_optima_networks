@@ -9,5 +9,11 @@ package lons;
  */
 public enum EdgeType
 {
-    TRANSITION_BASIN, ESCAPE_EDGE;
+    BASIN_TRANSITION, ESCAPE_EDGE;
+    
+    private int maxEscapeDistance = 1;
+    
+    void setEscape(int maxEscapeDistance) {
+        this.maxEscapeDistance = maxEscapeDistance;
+    }
 }

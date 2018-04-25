@@ -1,4 +1,4 @@
-package lons;
+package lons.examples;
 
 
 import java.util.ArrayList;
@@ -32,6 +32,10 @@ public class NKModelProblem implements BinaryProblem
         setRandomIndexMapping(n,k);
     }
     
+    /**
+     * Limited to 
+     */
+    
     @Override
     public BinarySolution[] getExhaustiveSetOfSolutions() {
         BinarySolution[] designs = new BinarySolution[BinaryProblem.getBitPower(n)];
@@ -63,7 +67,7 @@ public class NKModelProblem implements BinaryProblem
             indices.add(i);
         for (int i=0; i<n; i++) {
             // randomly permute the indices
-            java.util.Collections.shuffle(indices);
+            java.util.Collections.shuffle(indices,rng);
             int offset = 0;
             for (int j=0; j<k; j++) {
                 if (indices.get(j)==i) // need to make sure not linked to itself

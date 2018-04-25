@@ -1,4 +1,4 @@
-package lons;
+package lons.examples;
 
 
 /**
@@ -11,7 +11,6 @@ public class ConcreteBinarySolution extends BinarySolution
 {
     private boolean[] design;
     private int index = -1;
-    Neighbourhood<BinarySolution> neighbourhood;
     private ConcreteBinarySolution(boolean[] design) {
         this.design = design;
     }
@@ -37,6 +36,24 @@ public class ConcreteBinarySolution extends BinarySolution
             index = BinaryProblem.getIndexOfBitString(design);
         }   
         return index;
+    }
+    
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ConcreteBinarySolution) 
+            if (((ConcreteBinarySolution) obj).getIndex()==this.getIndex())
+                if (this.sameState((ConcreteBinarySolution) obj))
+                    return true;
+        
+        return false;
+    }
+    
+    private boolean sameState(ConcreteBinarySolution solution) {
+        for (int i=0; i<design.length; i++)
+            if (design[i]!=solution.design[i])
+                return false;
+        return true;
     }
     
     public static BinarySolution constructBinarySolution(boolean[] design) {

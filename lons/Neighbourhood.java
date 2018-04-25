@@ -10,5 +10,8 @@ package lons;
 public interface Neighbourhood<K extends Solution>
 {
     K[] neighbouringSolutions(K s);
-    int[] indicesOfNeighbouringSolutions(K s);
+    K[] neighbouringSolutionsUpToDistance(K s);
+    void setMaxDistance(int maxDistance);
+//     int[] indicesOfNeighbouringSolutions(K s);
+//     int[] indicesOfNeighbouringSolutions(K s, int maxDistance);
 }
