@@ -2,16 +2,29 @@ package lons;
 
 
 /**
- * Write a description of interface Neighbourhood here.
+ * Defines methods required by all Neighbourhood implementors
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jonathan Fieldsend 
+ * @version 1.0
  */
 public interface Neighbourhood<K extends Solution>
 {
+    /**
+     * Given the argument s, this method returns all its neighbours as defined by 
+     * this Neighbourhood instance
+     */
     K[] neighbouringSolutions(K s);
+    
+    /**
+     * Given the argument s, this method returns all its neighbours as defined by 
+     * this Neighbourhood instance up to a set distance currently stored in this 
+     * Neighbourhood
+     */
     K[] neighbouringSolutionsUpToDistance(K s);
+    
+    /**
+     * Set the maximum distance to be considered in future calls to the 
+     * neighbouringSolutionsUpToDistance method
+     */
     void setMaxDistance(int maxDistance);
-//     int[] indicesOfNeighbouringSolutions(K s);
-//     int[] indicesOfNeighbouringSolutions(K s, int maxDistance);
 }
