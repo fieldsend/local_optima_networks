@@ -4,7 +4,7 @@ package lons;
 /**
  * Enumeration class EdgeType - write a description of the enum class here
  * 
- * @author (your name here)
+ * @author Jonathan Fieldsend
  * @version (version number or date here)
  */
 public enum EdgeType
