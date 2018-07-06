@@ -11,19 +11,34 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 /**
- * Write a description of class LONGenerator here.
+ * LONGenerator is essentially the entry point for the package, providing methods for Local Optima Network calculation and file writing.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jonathan Fieldsend 
+ * @version 6/7/2018
  */
 public class LONGenerator
 {
-    private static int greedyHillclimbCalls;
+    private static int greedyHillclimbCalls; // counter to track how many times the internals of the greeyHillClimb function has been called
 
+    /**
+     * Method returns how many times the hillclimb method has been invoked since the counter was last reset
+     *
+     * @return number of hillclimb calls
+     */
     public static int getGreedyHillclimbCalls() {
         return greedyHillclimbCalls;
     }
     
+    /**
+     * Method calculates an exact LON by exhaustive enumeration, and fills the data structure arguments with the results
+     *
+     * @param problem problem defining landscape 
+     * @param neighbourhood neighbourhood defining landscape
+     * @param optimaBasins map of solutions which are local optima, and the corresponding weight of their basin -- should be passed in empty and will be filled on method returning 
+     * @param optimaQuality map of solutions which are local optima, and their corresponding quality -- should be passed in empty and will be filled on method returning
+     * @param mapOfAdjacencyListAndWeight map representing an adjacency list, and corersponding weight (key is local optima, and returns map of adjacent basins, and weights) -- should be passed in empty and will be filled on method returning
+     * @param edgeType edge type to use in LON construction
+     */
     public static <K extends Solution> void naiveExhaustiveLON(Problem<K> problem, Neighbourhood<K> neighbourhood,  HashMap<K,Weight> optimaBasins,HashMap<K,Double> optimaQuality,HashMap<K,HashMap<K,Weight>> mapOfAdjacencyListAndWeight, EdgeType edgeType) {
         exhaustiveLON(problem,neighbourhood,optimaBasins,optimaQuality,mapOfAdjacencyListAndWeight,edgeType,false);
     }
@@ -62,7 +77,7 @@ public class LONGenerator
                 }
             }
         }
-        // now approximated edges
+        // now approximate edges
         if (edgeType.equals(EdgeType.ESCAPE_EDGE)) {  
             for (K optimum : optima)
                 mapOfAdjacencyListAndWeight.put(optimum,new HashMap<K,Weight>()); //initialise maps to adjacent optima, and their edge weights
