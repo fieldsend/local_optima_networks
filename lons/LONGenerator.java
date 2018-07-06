@@ -50,7 +50,7 @@ public class LONGenerator
     public static <K extends Solution> void naiveSampledLON(Problem<K> problem, Neighbourhood<K> neighbourhood, HashMap<K,Weight> optimaBasins, HashMap<K,Double> optimaQuality, HashMap<K,HashMap<K,Weight>> mapOfAdjacencyListAndWeight, EdgeType edgeType, int numberOfSamples) {
         System.out.print("\n cleaning...");
         clean();
-        HashSet<K> optima = new HashSet<>(); // list of optima
+        HashSet<K> optima = new HashSet<>(); // set of optima
 
         // sample to get basin sizes
         for (int i=0; i<numberOfSamples; i++) {
