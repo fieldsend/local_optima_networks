@@ -2,10 +2,10 @@ package lons.examples;
 
 
 /**
- * Write a description of class ConcreteBinarySolution here.
+ * ConcreteBinarySolution allows instantiation of bitsting solutions (as boolean arrays).
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jonathan Fieldsend
+ * @version 11/07/2018
  */
 public class ConcreteBinarySolution extends BinarySolution
 {

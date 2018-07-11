@@ -5,10 +5,11 @@ import cec2013.Func; // will need the cec2013 package to compile
 import java.util.Random;
 
 /**
- * Write a description of class DiscretisedCEC2013NichingProblem here.
+ * DiscretisedCEC2013NichingProblem wraps and discretises the CEC2013 niching
+ * competition test problems.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jonathan Fieldsend
+ * @version 11/07/2018
  */
 public class DiscretisedCEC2013NichingProblem implements IntegerVectorProblem
 {

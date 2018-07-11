@@ -2,10 +2,11 @@ package lons.examples;
 
 import lons.Solution;
 /**
- * Write a description of interface Solution here.
+ * Class defines additional  methods that BinarySolutions must provide beyond those
+ * defined in Solution
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jonathan Fieldsend
+ * @version 11/07/2018
  */
 public abstract class BinarySolution extends Solution
 {

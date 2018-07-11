@@ -2,10 +2,11 @@ package lons.examples;
 
 import lons.Problem;
 /**
- * Write a description of interface Problem here.
+ * Class defines additional methods that BinaryProblems must provide beyond those
+ * defined in Problem
  * 
  * @author Jonathan Fieldsend
- * @version (a version number or a date)
+ * @version 11/07/2018
  */
 public interface BinaryProblem extends Problem<BinarySolution>
 {
@@ -16,6 +17,7 @@ public interface BinaryProblem extends Problem<BinarySolution>
             index += x[i] ? BinaryProblem.bitPowers[i] : 0;
         return index;  
     }
+    
     /*
      * CHANGE TO MAKE SOLUTIONS WITH HASHCLASH
      */

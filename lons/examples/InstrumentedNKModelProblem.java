@@ -2,10 +2,11 @@ package lons.examples;
 
 
 /**
- * Write a description of class InstrumentedNKBinaryProblem here.
+ * InstrumentedNKBinaryProblem, instrumented version of NKBinaryProblem
+ * to track calls.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jonathan Fieldsend
+ * @version 11/07/2018
  */
 public class InstrumentedNKModelProblem implements BinaryProblem
 {

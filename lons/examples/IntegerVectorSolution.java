@@ -3,10 +3,11 @@ package lons.examples;
 import lons.Solution;
 
 /**
- * Abstract class PermutationSolution - write a description of the class here
+ * Class defines additional methods that IntegerVectorSolutions must provide beyond those
+ * defined in Solution
  * 
- * @author (your name here)
- * @version (version number or date here)
+ * @author Jonathan Fieldsend
+ * @version 11/07/2018
  */
 public abstract class IntegerVectorSolution extends Solution
 {

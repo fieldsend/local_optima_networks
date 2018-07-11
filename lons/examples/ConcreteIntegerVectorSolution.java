@@ -2,10 +2,11 @@ package lons.examples;
 
 
 /**
- * Write a description of class ConcretePermutationSolution here.
+ * ConcreteIntegerVectorSolution allows instantiation of solutions
+ * that maintain arrays of integers as design vectors
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jonathan Fieldsend
+ * @version 11/07/2018
  */
 public class ConcreteIntegerVectorSolution extends IntegerVectorSolution
 {

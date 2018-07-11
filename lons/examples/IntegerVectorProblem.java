@@ -3,10 +3,11 @@ package lons.examples;
 import lons.Problem;
 
 /**
- * Write a description of interface PermutationProblem here.
+ * Class defines additional methods that IntegerVectorProblems must provide beyond those
+ * defined in Problem
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jonathan Fieldsend
+ * @version 11/07/2018
  */
 public interface IntegerVectorProblem extends Problem<IntegerVectorSolution>
 {

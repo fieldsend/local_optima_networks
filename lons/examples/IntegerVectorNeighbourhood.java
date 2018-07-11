@@ -2,10 +2,10 @@ package lons.examples;
 
 import lons.Neighbourhood;
 /**
- * Write a description of class IntegerVectorNeighbourhood here.
+ * IntegerVectorNeighbourhood -- von Neumann nieghbourhood on single integer changes used   
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jonathan Fieldsend
+ * @version 11/07/2018
  */
 public class IntegerVectorNeighbourhood implements Neighbourhood<IntegerVectorSolution>
 {

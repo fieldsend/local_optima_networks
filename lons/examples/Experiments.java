@@ -11,10 +11,11 @@ import cec2013.ClosedInterval;
 import java.util.List;
 
 /**
- * Write a description of class Main here.
+ * Class to run example experiments from paper -- requires use of cec2013 package, 
+ * which is maintained by Michael Epitropakis and alsi available on GitHub https://github.com/mikeagn 
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jonathan Fieldsend
+ * @version 11/07/2018
  */
 public class Experiments
 {

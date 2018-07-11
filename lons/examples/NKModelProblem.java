@@ -4,10 +4,10 @@ package lons.examples;
 import java.util.ArrayList;
 import java.util.Random;
 /**
- * Write a description of class NKModelProblem here.
+ * NKModelProblem represents tunable NK model problems.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jonathan Fieldsend
+ * @version 11/07/2018
  */
 public class NKModelProblem implements BinaryProblem
 {

@@ -4,16 +4,20 @@ import lons.Neighbourhood;
 import java.util.HashMap;
 
 /**
- * Write a description of class BinaryHammingNeighbourhood here. Minimum 1-distance neighbour, 
+ * BinaryHammingNeighbourhood.  
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jonathan Fieldsend
+ * @version 11/07/2018
  */
 public class BinaryHammingNeighbourhood implements Neighbourhood<BinarySolution>
 {
     private int maxDistance=2;
     private static HashMap<Integer,boolean[][]> allBitFlipMasks = new HashMap<>();
     
+    /**
+     * Sets max hamming distance used in this neighbour for distance neighbour calls. 
+     * Minimum 1-distance neighbour.
+     */
     @Override
     public void setMaxDistance(int maxDistance) {
         this.maxDistance = maxDistance > 0 ? maxDistance : 1;
