@@ -11,7 +11,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 /**
- * LONGenerator is essentially the entry point for the package, providing methods for Local Optima Network calculation and file writing.
+ * LONGenerator is essentially the entry point for the package, providing methods 
+ * for Local Optima Network calculation and file writing.
  * 
  * @author Jonathan Fieldsend 
  * @version 6/7/2018
@@ -30,7 +31,7 @@ public class LONGenerator
     }
     
     /**
-     * Method calculates an exact LON by exhaustive enumeration, and fills the data structure arguments with the results
+     * Method calculates an exact LON by exhaustive enumeration, and fills the data structure arguments with the results.
      *
      * @param problem problem defining landscape 
      * @param neighbourhood neighbourhood defining landscape
@@ -38,15 +39,45 @@ public class LONGenerator
      * @param optimaQuality map of solutions which are local optima, and their corresponding quality -- should be passed in empty and will be filled on method returning
      * @param mapOfAdjacencyListAndWeight map representing an adjacency list, and corersponding weight (key is local optima, and returns map of adjacent basins, and weights) -- should be passed in empty and will be filled on method returning
      * @param edgeType edge type to use in LON construction
+     * 
+     * @deprecated use {@link #exhaustiveLON()} instead. Code for illustrative purposes of less efficient implementation. 
      */
+    @Deprecated
     public static <K extends Solution> void naiveExhaustiveLON(Problem<K> problem, Neighbourhood<K> neighbourhood,  HashMap<K,Weight> optimaBasins,HashMap<K,Double> optimaQuality,HashMap<K,HashMap<K,Weight>> mapOfAdjacencyListAndWeight, EdgeType edgeType) {
         exhaustiveLON(problem,neighbourhood,optimaBasins,optimaQuality,mapOfAdjacencyListAndWeight,edgeType,false);
     }
 
+    
+    /**
+     * Method calculates an exact LON by exhaustive enumeration, and fills the data structure arguments with the results.
+     *
+     * @param problem problem defining landscape 
+     * @param neighbourhood neighbourhood defining landscape
+     * @param optimaBasins map of solutions which are local optima, and the corresponding weight of their basin -- should be passed in empty and will be filled on method returning 
+     * @param optimaQuality map of solutions which are local optima, and their corresponding quality -- should be passed in empty and will be filled on method returning
+     * @param mapOfAdjacencyListAndWeight map representing an adjacency list, and corersponding weight (key is local optima, and returns map of adjacent basins, and weights) -- should be passed in empty and will be filled on method returning
+     * @param edgeType edge type to use in LON construction
+     */ 
     public static <K extends Solution> void exhaustiveLON(Problem<K> problem, Neighbourhood<K> neighbourhood, HashMap<K,Weight> optimaBasins, HashMap<K,Double> optimaQuality, HashMap<K,HashMap<K,Weight>> mapOfAdjacencyListAndWeight, EdgeType edgeType) {
         exhaustiveLON(problem,neighbourhood,optimaBasins,optimaQuality,mapOfAdjacencyListAndWeight,edgeType,true);
     }
 
+    
+    /**
+     * Method calculates an estimated LON by randomly sampling from the domain and hill-climbing from eash of these
+     * random initial samples, and fills the data structure arguments with the results.
+     *
+     * @param problem problem defining landscape 
+     * @param neighbourhood neighbourhood defining landscape
+     * @param optimaBasins map of solutions which are local optima, and the corresponding weight of their basin -- should be passed in empty and will be filled on method returning 
+     * @param optimaQuality map of solutions which are local optima, and their corresponding quality -- should be passed in empty and will be filled on method returning
+     * @param mapOfAdjacencyListAndWeight map representing an adjacency list, and corersponding weight (key is local optima, and returns map of adjacent basins, and weights) -- should be passed in empty and will be filled on method returning
+     * @param edgeType edge type to use in LON construction
+     * @param numberOfSamples number of random samplesin legal domain to take to construct estimated LON
+     * 
+     * @deprecated use {@link #exhaustiveLON()} instead. Code for illustrative purposes of less efficient implementation. 
+     */
+    @Deprecated
     public static <K extends Solution> void naiveSampledLON(Problem<K> problem, Neighbourhood<K> neighbourhood, HashMap<K,Weight> optimaBasins, HashMap<K,Double> optimaQuality, HashMap<K,HashMap<K,Weight>> mapOfAdjacencyListAndWeight, EdgeType edgeType, int numberOfSamples) {
         System.out.print("\n cleaning...");
         clean();
@@ -101,6 +132,18 @@ public class LONGenerator
         System.out.println(optima.size());
     }
 
+    /**
+     * Method calculates an estimated LON by randomly sampling from the domain and hill-climbing from eash of these
+     * random initial samples, and fills the data structure arguments with the results.
+     *
+     * @param problem problem defining landscape 
+     * @param neighbourhood neighbourhood defining landscape
+     * @param optimaBasins map of solutions which are local optima, and the corresponding weight of their basin -- should be passed in empty and will be filled on method returning 
+     * @param optimaQuality map of solutions which are local optima, and their corresponding quality -- should be passed in empty and will be filled on method returning
+     * @param mapOfAdjacencyListAndWeight map representing an adjacency list, and corersponding weight (key is local optima, and returns map of adjacent basins, and weights) -- should be passed in empty and will be filled on method returning
+     * @param edgeType edge type to use in LON construction
+     * @param numberOfSamples number of random samplesin legal domain to take to construct estimated LON
+     */ 
     public static <K extends Solution> void sampledLON(Problem<K> problem, Neighbourhood<K> neighbourhood, HashMap<K,Weight> optimaBasins, HashMap<K,Double> optimaQuality,HashMap<K,HashMap<K,Weight>> mapOfAdjacencyListAndWeight, EdgeType edgeType, int numberOfSamples) {
         //System.out.print("\n cleaning...");
         clean();
@@ -186,11 +229,21 @@ public class LONGenerator
         //System.out.println(mapFromSolutionToOptima.size());
     }
     //helper methods
-
+    /*
+     * resets the hill climb counter for stats analysis
+     */
     private static void clean() {
         greedyHillclimbCalls=0;
     }
 
+    /**
+     * Method write out the LON stored in the arguments to files. These are LON_vertex_labels.txt, LON_vertex_quality.txt, LON_basin_sizes.txt,
+     * LON_adjacency_list_by_label.txt and LON_adjacency_weights.txt
+     * 
+     * @param optimaBasins map of solutions which are local optima, and the corresponding weight of their basin  
+     * @param optimaQuality map of solutions which are local optima, and their corresponding quality -
+     * @param mapOfAdjacencyListAndWeight map representing an adjacency list, and corersponding weight (key is local optima, and returns map of adjacent basins, and weights) 
+     */
     public static <K extends Solution> void writeOutLON(HashMap<K,Weight> optimaBasins, HashMap<K,Double> optimaQuality, HashMap<K,HashMap<K,Weight>> mapOfAdjacencyListAndWeight) {
         int[] vertexList = new int[optimaBasins.size()];
         int[] basinSizes = new int[optimaBasins.size()];
@@ -203,6 +256,8 @@ public class LONGenerator
         String adjacencyWeightsFilename = "LON_adjacency_weights.txt";
         
         Charset charset = Charset.forName("US-ASCII");
+        // CODE BELOW NEEDS REFACTORING
+        
         try (BufferedWriter writer = Files.newBufferedWriter(new File(vertexFilename).toPath(), charset)) {
             //String s = "";
             for (K key : optimaBasins.keySet()) {

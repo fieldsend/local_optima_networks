@@ -2,18 +2,18 @@ package lons;
 
 
 /**
- * Enumeration class EdgeType - write a description of the enum class here
+ * Enum represents all edge types currently supported
  * 
- * @author (your name here)
- * @version (version number or date here)
+ * @author Jonathan Fieldsend
+ * @version 11/07/2018
  */
 public enum EdgeType
 {
     BASIN_TRANSITION, ESCAPE_EDGE;
     
-    private int maxEscapeDistance = 1;
+    /*private int maxEscapeDistance = 1;
     
     void setEscape(int maxEscapeDistance) {
         this.maxEscapeDistance = maxEscapeDistance;
-    }
+    }*/
 }
