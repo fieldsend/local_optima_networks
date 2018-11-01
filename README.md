@@ -10,4 +10,10 @@ Computationally Efficient Local Optima Network Construction
 GECCO Companion publication, ACM
 2018
 
-Example use: (TBC)
+Example use:
+
+todo -- example to regenerate results
+
+todo -- example exahustive lon
+
+todo -- example sampled lon
