@@ -5,10 +5,13 @@ Java packages provide interfaces and classes for efficient generation of the loc
 
 Companion codebase for the paper
 
-Jonathan E Fieldsend
-Computationally Efficient Local Optima Network Construction
-GECCO Companion publication, ACM
-2018
+Jonathan E. Fieldsend 
+Computationally efficient local optima network construction. 
+Proceedings of the Genetic and Evolutionary Computation Conference Companion 2018 Jul 6 (pp. 1481-1488). ACM.
+
+https://ore.exeter.ac.uk/repository/handle/10871/32626
+https://doi.org/10.1145/3205651.3208263
+
 
 Example use:
 
