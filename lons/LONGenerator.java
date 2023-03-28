@@ -64,7 +64,7 @@ public class LONGenerator
 
     
     /**
-     * Method calculates an estimated LON by randomly sampling from the domain and hill-climbing from eash of these
+     * Method calculates an estimated LON by randomly sampling from the domain and hill-climbing from each of these
      * random initial samples, and fills the data structure arguments with the results.
      *
      * @param problem problem defining landscape 
@@ -133,7 +133,7 @@ public class LONGenerator
     }
 
     /**
-     * Method calculates an estimated LON by randomly sampling from the domain and hill-climbing from eash of these
+     * Method calculates an estimated LON by randomly sampling from the domain and hill-climbing from each of these
      * random initial samples, and fills the data structure arguments with the results.
      *
      * @param problem problem defining landscape 

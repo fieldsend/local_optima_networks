@@ -21,7 +21,7 @@ public interface BinaryProblem extends Problem<BinarySolution>
      */
     static int getIndexOfBitString(boolean[] x) {
         int index = 0;
-        for (int i=0; i<Math.max(x.length,MAX_BITS_UNIQUE); i++) 
+        for (int i=0; i<Math.min(x.length,MAX_BITS_UNIQUE); i++) 
             index += x[i] ? BinaryProblem.bitPowers[i] : 0;
         return index;  
     }
@@ -55,7 +55,7 @@ public interface BinaryProblem extends Problem<BinarySolution>
      * @return array containing 2^0 up to 2^power
      */
     static int[] getBitPowers(int power) {
-        int[] x = new int[power];
+        int[] x = new int[power+1];
         x[0] = 1;
         for (int i = 1; i <= power; i++)
             x[i] = x[i-1] * 2;
