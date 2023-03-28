@@ -238,7 +238,7 @@ public class LONGenerator
 
     /**
      * Method write out the LON stored in the arguments to files. These are LON_vertex_labels.txt, LON_vertex_quality.txt, LON_basin_sizes.txt,
-     * LON_adjacency_list_by_label.txt and LON_adjacency_weights.txt
+     * LON_adjacency_list_by_label.txt, LON_adjacency_weights.txt and LON_adjacency_matrix.txt
      * 
      * @param optimaBasins map of solutions which are local optima, and the corresponding weight of their basin  
      * @param optimaQuality map of solutions which are local optima, and their corresponding quality -
@@ -254,6 +254,7 @@ public class LONGenerator
         String basinFilename = "LON_basin_sizes.txt";
         String adjacencyListVertexLabelsFilename = "LON_adjacency_list_by_label.txt";
         String adjacencyWeightsFilename = "LON_adjacency_weights.txt";
+        String adjacencyMatrixFilename = "LON_adjacency_matrix.txt";
         
         Charset charset = Charset.forName("US-ASCII");
         // CODE BELOW NEEDS REFACTORING
@@ -311,13 +312,33 @@ public class LONGenerator
             for (K key : mapOfAdjacencyListAndWeight.keySet()) {
                 HashMap<K,Weight> list = mapOfAdjacencyListAndWeight.get(key);
                 for (K listKey : list.keySet()) {
-                    s += optimaBasins.get(listKey).getWeight() +" ";
+                    s += list.get(listKey).getWeight() + " ";
                 }
                 s += "\n";
             }
             writer.write(s, 0, s.length());
         } catch (IOException x) {
             System.err.format("IOException: problem writing to file " + adjacencyWeightsFilename, x);
+        }
+        
+        try (BufferedWriter writer = Files.newBufferedWriter(new File(adjacencyMatrixFilename).toPath(), charset)) {
+            String s = "";
+            for (K key : optimaQuality.keySet()) { // source
+                HashMap<K,Weight> list = mapOfAdjacencyListAndWeight.get(key);
+                for (K key2 : optimaQuality.keySet()) {  // potential desitination
+                    if (list.containsKey(key2)){
+                        s += list.get(key2).getWeight() + " ";
+                    } else {
+                        s += 0 + " ";
+                    }
+                }
+                
+                s += "\n";
+                //s += optimaQuality.get(key).doubleValue() +"\n";
+            }
+            writer.write(s, 0, s.length());
+        } catch (IOException x) {
+            System.err.format("IOException: problem writing to file " + adjacencyMatrixFilename, x);
         }
     }
     
@@ -332,7 +353,7 @@ public class LONGenerator
         ArrayList<K> optima = new ArrayList<>(); // list of optima
         K[] designs = problem.getExhaustiveSetOfSolutions(); // all designs
         HashMap<K,K> mapFromSolutionToOptima = new HashMap<>(designs.length); // map from each solution to its optima
-        System.out.print("getting fitnesses...");
+        System.out.print("design number: "+ designs.length + "\n getting fitnesses...");
         double[] solutionFitness = getAllQualities(designs,problem); // fitnesses of all solutions, assumed maximisation
         System.out.print(solutionFitness.length + " getting neighbourhood indices...");
         //System.out.println(getNumberOfOptima(neighbourhood,designs,solutionFitness,new ArrayList<>()));
